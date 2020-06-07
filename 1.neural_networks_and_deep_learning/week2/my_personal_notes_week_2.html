@@ -1,0 +1,733 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Neural Network and Deep Learning - Course 1</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0220f744-6cb5-48c4-a8c6-c866d7d342d3" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🗨️</span></div><h1 class="page-title">Neural Network and Deep Learning - Course 1</h1><table class="properties"><tbody><tr class="property-row property-row-created_time"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCreatedAt"><path d="M6.98643729,14.0000972 C5.19579566,14.0000972 3.40419152,13.3106896 2.04245843,11.9323606 C-0.681017475,9.21200555 -0.680780251,4.76029539 2.04293482,2.04012507 C4.76664406,-0.68004331 9.22427509,-0.68004331 11.9480135,2.04013479 C13.272481,3.36277455 14,5.1330091 14,6.99552762 C14,8.87640182 13.2721894,10.6285043 11.9480135,11.9509302 C10.5679344,13.3105924 8.77756503,14.0000972 6.98643729,14.0000972 Z M10.2705296,7.00913883 L10.2705296,8.46099754 L10.2705296,8.65543362 L10.076181,8.65543362 L8.6543739,8.65543362 L5.72059514,8.65543362 L5.52619796,8.65543362 L5.52619796,8.46099754 L5.52619796,5.52541044 L5.52619796,3.37946773 L5.52619796,3.18502193 L5.72059514,3.18502193 L7.17253164,3.18502193 L7.36692883,3.18502193 L7.36692883,3.37946773 L7.36692883,6.81467358 L10.076181,6.81467358 L10.2705296,6.81467358 L10.2705296,7.00913883 Z M12.1601539,6.99552762 C12.1601539,5.61697497 11.6190112,4.32597154 10.6393933,3.34769528 C8.63253764,1.34336744 5.35197452,1.34061603 3.34153136,3.33944106 C3.33868273,3.34219247 3.33607716,3.34494388 3.33322852,3.34769528 C1.32397148,5.35459953 1.32372842,8.63641682 3.33322852,10.6433794 C5.34295224,12.6504489 8.62968901,12.6504489 10.6393933,10.6433794 C11.6190112,9.66506426 12.1601539,8.37408027 12.1601539,6.99552762 Z"></path></svg></span>Date Created</th><td><time>@May 28, 2020 9:58 PM</time></td></tr><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M7,13 C10.31348,13 13,10.31371 13,7 C13,3.68629 10.31348,1 7,1 C3.68652,1 1,3.68629 1,7 C1,10.31371 3.68652,13 7,13 Z M3.75098,5.32278 C3.64893,5.19142 3.74268,5 3.90869,5 L10.09131,5 C10.25732,5 10.35107,5.19142 10.24902,5.32278 L7.15771,9.29703 C7.07764,9.39998 6.92236,9.39998 6.84229,9.29703 L3.75098,5.32278 Z"></path></svg></span>Status</th><td><span class="selected-value select-value-color-red">Courses</span></td></tr></tbody></table></header><div class="page-body"><h1 id="8ea7bb2e-6fcc-49b9-80f8-18867573b29f" class="">Gradient Descent for Logistic Regression:</h1><p id="5ed164e3-be85-4bc2-9a54-1c94d96910f2" class="">Simple steps for ith training example [all i are in superscript]:</p><ol id="69163ed5-88c9-4768-9194-ac1bf857b380" class="numbered-list" start="1"><li>[w1,x1,w2,x2,b] → zi = w1*x1i + w2*x2i + b → ai = sigmoid (zi) → L (ai, yi) = -yi(ln(ai)) - (1-yi)(ln(1-ai))</li></ol><ol id="99d25fc8-b1e1-4138-bff1-4cc974576e72" class="numbered-list" start="2"><li>Differential will be calculated from right to left.</li></ol><ol id="9179cc01-ec85-4799-a8d9-b926ff84e18d" class="numbered-list" start="3"><li>dL/da = -(yi/ai) + ((1-yi)/(1-ai))</li></ol><ol id="a18399b6-cb17-4752-8ad7-4103d51be0cc" class="numbered-list" start="4"><li>dL/dz = dL/da*da/dz = ai - yi [after simplification]</li></ol><ol id="68fe185b-9cc0-408e-b81a-b7cc88900a0e" class="numbered-list" start="5"><li>dL/dw1 [our aim is to find dw so that we can apply gradient descent] = [dL/da*da/dz]*dz/dw1 = dL/dz*dz/dw1 = (ai - yi) * x1 [as dz/dw1 = x1]</li></ol><h2 id="19d47466-b742-4d49-9579-4dc03becc802" class="">Applying Neural Network for Image Processing</h2><h3 id="afce60b4-8fc0-4121-88fd-f7f87ce881f0" class="">Preparing Data:</h3><ol id="262dca91-bc23-4339-a55a-ba63bfeb88c8" class="numbered-list" start="1"><li>import data</li></ol><ol id="b071b6eb-54dc-42b9-aa92-afe8984e61a1" class="numbered-list" start="2"><li>check dimension - initially the array should have dimension like (m_train, num_px, num_px, 3)</li></ol><ol id="3c8ffeb5-38b6-477f-a0db-24ddf76301dc" class="numbered-list" start="3"><li>flatten the numpy array by using</li></ol><pre id="a99e6ed2-f623-4394-9bb0-1bdc88986fc8" class="code"><code>X.reshape(X.shape[0],-1).T
+# OR
+X.reshape(X.shape[1]*X.shape[2]*X.shape[3],X.shape[0])</code></pre><p id="2b3b8ded-a9da-45bb-ae88-9d6482aed052" class="">4. From the above step, dimension of our image data will be (number of values in flattened image, number of training examples)</p><p id="8fa7236f-634e-489b-8b31-9259ecd33a3d" class="">5. For example - 5 images with (10,10,3) dimension. X_train_original → (5,10,10,3)<div class="indented"><ul id="99183715-2888-4783-8e26-9f651209a566" class="bulleted-list"><li>Flattened image dimension - (300, 5)</li></ul></div></p><p id="fa7e8438-33a2-453d-a89d-01230dc5038f" class="">6. Just divide by 255 to standardize the data</p><h3 id="37a79a94-36b6-47c6-b0e8-d2c5590610d3" class="">Writing Algorithm [Logistic Regression with Neural Network Mindset]:</h3><p id="17d32416-65b8-4d09-a7c1-375d271afcd7" class="">In case of logistic regression, there are two major steps: Propagation and Optimization. In neural networks, we will see - forward propagation and backward propagation. </p><p id="c39d98b3-57d3-4c33-9bbe-940cb03fec0f" class="">Propagation: [finding - a, J, dw (dJ/dw), db (dJ/db)]</p><ol id="6ba9299c-de41-40c1-9ba4-a84c8a0fadfb" class="numbered-list" start="1"><li>make a function : define sigmoid function</li></ol><ol id="7e5be80b-1de4-4cf1-a4a0-9b36fd32205a" class="numbered-list" start="2"><li>initialize parameters - w, b → shape of W → (n*1), shape of b → (1*1)</li></ol><ol id="fdbf23f2-e2ee-4c36-92be-2e36b0e9f8bd" class="numbered-list" start="3"><li>calculate z- no loops required - X will be n by m dimensional. W will be n*1 dimensional. b will be a constant - b will be broadcasted to 1*m</li></ol><ol id="550003e1-4ea0-4492-b50b-814a89cf9bda" class="numbered-list" start="4"><li>z = WT * X + b → dimension of z  = (1,m) - WT* X will be matrix product (np.dot)</li></ol><ol id="dbba4063-1031-449c-93a7-983e4bc13da1" class="numbered-list" start="5"><li>take sigmoid of z, a = sigmoid(z)</li></ol><ol id="87035388-a57e-4e52-96da-42bca4c11481" class="numbered-list" start="6"><li>we will get predicted Y (A) → shape: wT [1*n] :: X [n*m] → 1*m</li></ol><ol id="569a17bc-cb1b-4330-ad91-9d84755db436" class="numbered-list" start="7"><li>Calculate L → L denotes loss function for one training example. Average of loss function for each training example gives us cost function</li></ol><ol id="d3b94a60-0cf4-48e3-87fb-c9c1f9e1ba80" class="numbered-list" start="8"><li>Loss for one training example: L = -(yi*ln(ai)) - ((1-yi)(ln(1-ai)) → ai is same as predicted y → shape of yi = (1,1), ai = (1,1) → shape of L → (1,1)</li></ol><ol id="67a85d8d-e524-4fa9-9ff5-0eb509b83069" class="numbered-list" start="9"><li>Loss for all training examples: L = -(Y)ln(A) - (1-Y)(ln(1-A)  → shape: Y → (1,m), A → (1,m). We have two options now. For calculating Z we used matrix multiplication as we wanted something like w1x1 + w2x2 +... but in case of cost function, we have (1,m) dimensional A and (1,m) dimensional Y, so we want to calculate elementwise multiplication For this purpose we will use normal * (multiplication) operation in python. As result, we will get a vector of (1,m) dimension where each element is loss function value, while its average will give us the cost function.</li></ol><ol id="7e61bfdf-8f13-4f45-95aa-5c87a77fd314" class="numbered-list" start="10"><li>We can calculate gradient of cost function dw and db which will be used to update parameters w and b:<ol id="cdb4fe49-51fb-4099-9fe8-8c433fdb9f11" class="numbered-list" start="1"><li>dw = X*dZ = np.dot(X, (A-Y).T)/m</li></ol><ol id="724ab335-b1b6-4b72-9194-dc5b7fb96a7d" class="numbered-list" start="2"><li>db = dZ = np.sum(A-Y)/m</li></ol></li></ol><p id="fe341b4c-a527-4f86-aaca-0a7cd614ca3f" class="">Backward Propagation:</p><ol id="8381d358-db90-42e0-86a5-8fc83a0cd63b" class="numbered-list" start="1"><li>Till now, we have not used any for loop. We avoided its need by using vectorized notation.</li></ol><ol id="807417bb-748e-4f18-9710-a0870b874ca9" class="numbered-list" start="2"><li>We will have to use a for loop for every iteration. For every iteration, we will update W and b and then calculate new gradients based on the updated W and b. <pre id="4a6ad403-abee-4416-8246-956143776aa1" class="code"><code>for i in range(num_iteration):
+	
+	grads = propagation(W, b, X,Y)
+	dw = grads[&#x27;dw&#x27;]
+	db = grads[&#x27;db&#x27;]
+	w = w - alpha*dw
+	b = b - alpha*db</code></pre></li></ol><h2 id="45c505ee-e04d-40ce-9de5-b71905d8f5f4" class="">Code:</h2><pre id="83fcd984-14b5-42d3-996b-7d5972f7e3bb" class="code"><code>def sigmoid(z):
+    a = 1/(1+np.exp(-z))
+    return a
+
+def initilize_parameters(dim):
+    W = np.zeros(dim) #dimension in this case will be - (n_px*n_px*3,1)
+    b = 0
+    return W, b
+
+def propagation(W, b, X, Y):
+    &#x27;&#x27;&#x27;finding z, a, L, J, dw, db 
+    required - w,b, X, Y&#x27;&#x27;&#x27;
+    m = X.shape[1]
+    Z = np.dot(W.T,X) + b #shape (1,m)
+    A = sigmoid(Z) #shape (1,m)
+    cost = (1/m)*np.sum(-(Y)*np.log(A) - (1-Y)*(np.log(1-A))) #cost function = average of all loss function.
+    # we are using normal product (element-wise) because Y and log(A) both have the same dimension and both of them are a number for a training example
+    
+    dZ = A-Y
+    dW = np.dot(X, dZ.T)/m  #dJ/dw = dw = x*dz --&gt; X*(A-Y)
+    db = dZ.sum()/m # shape (1,1) 
+    
+    grad = {&#x27;dW&#x27;:dW, &#x27;db&#x27;:db}
+    return grad, cost
+
+def optimization(W, b, X, Y, num_iteration, alpha, print_cost = False):
+    costs = []
+    for i in range(num_iteration):
+        
+        # gradients
+        grads, cost = propagation(W,b,X,Y)
+        dW = grads[&#x27;dW&#x27;]
+        db = grads[&#x27;db&#x27;]
+
+        # update parameters
+        W = W - alpha*dW
+        b = b - alpha*db
+        
+        # print cost for every 100th iteration
+        if i%1000 == 0:
+            costs.append(cost)
+        if print_cost == True and i%1000== 0:
+            print(f&quot;cost after {i}th iteration:{cost}&quot;)
+    
+    params = {&#x27;W&#x27;:W, &#x27;b&#x27;:b}
+    grads = {&#x27;dW&#x27;:dW, &#x27;db&#x27;:db}
+    
+    return params, grads, costs
+
+def predict(W, b, X):
+#     W = W.reshape(X.shape[1],1)
+    A = sigmoid(np.dot(W.T, X) + b) #the predictions - shape - (1,m)
+    y_pred = np.zeros((1,A.shape[1]))
+    
+    for i in range(A.shape[1]):
+        if A[0,i]&gt;0.5:
+            y_pred[0,i]=1
+        else:
+            y_pred[0,i] = 0
+    
+    return A, Z, y_pred
+
+def model(train_x, train_y, test_x, test_y, num_iteration, alpha, print_cost = False):
+    #training our model
+    #intitialize parameters:
+    m = train_x.shape[1]
+    n = train_x.shape[0]
+    W,b = initilize_parameters((n,1))
+    
+    #forward propagation
+    grad, cost = propagation(W,b,train_x, train_y)
+    
+    #extract gradients
+    dW = grad[&#x27;dW&#x27;]
+    db = grad[&#x27;db&#x27;]
+    
+    #back propagation:
+    params, grads, costs = optimization(W,b,train_x, train_y,  num_iteration, alpha, print_cost)
+    
+    #extract parameters and gradients
+    W = params[&#x27;W&#x27;]
+    b = params[&#x27;b&#x27;]
+    dW = grads[&#x27;dW&#x27;]
+    db = grads[&#x27;db&#x27;]
+    
+    # make prediction:
+    A, Z, y_predicted_train = predict(W, b, train_x)
+    A, Z, y_predicted_test = predict(W,b, test_x)
+    
+    #accuracy:
+    differences_train = (y_predicted_train - train_y)
+    differences_test = (y_predicted_test - test_y)
+    
+    correct_prediction_train = (differences_train==0).sum() #number of zeros in differences_train
+    correct_prediction_test = (differences_test==0).sum() #number of zeros in differences_test
+    
+    accuracy_train = correct_prediction_train/train_y.shape[1]
+    accuracy_test = correct_prediction_test/test_y.shape[1]
+    
+    print(accuracy_train, accuracy_test)
+    return y_predicted_train, y_predicted_test, A, Z, differences_train, differences_test</code></pre><p id="67e7fd86-8347-478e-9bb2-e9bf3734d444" class="">
+</p><p id="d38981e0-d13d-4fc2-bac6-a9eb46e8abd3" class="">
+</p><p id="51fa1d46-08d4-4115-ba4d-a45de91e0aa5" class="">
+</p></div></article></body></html>
