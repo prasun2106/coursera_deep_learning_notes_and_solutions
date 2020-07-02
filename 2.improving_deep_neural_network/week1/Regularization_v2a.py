@@ -21,7 +21,7 @@
 # * Fixed a comment so that keep_prob and 1-keep_prob add up to 100%
 # * Updated print statements and 'expected output' for easier visual comparisons.
 
-# In[28]:
+# In[2]:
 
 # import packages
 import numpy as np
@@ -47,7 +47,7 @@ plt.rcParams['image.cmap'] = 'gray'
 # 
 # They give you the following 2D dataset from France's past 10 games.
 
-# In[29]:
+# In[3]:
 
 train_X, train_Y, test_X, test_Y = load_2D_dataset()
 
@@ -74,7 +74,7 @@ train_X, train_Y, test_X, test_Y = load_2D_dataset()
 # 
 # In each part, you will run this model with the correct inputs so that it calls the functions you've implemented. Take a look at the code below to familiarize yourself with the model.
 
-# In[30]:
+# In[4]:
 
 def model(X, Y, learning_rate = 0.3, num_iterations = 30000, print_cost = True, lambd = 0, keep_prob = 1):
     """
@@ -148,7 +148,7 @@ def model(X, Y, learning_rate = 0.3, num_iterations = 30000, print_cost = True, 
 
 # Let's train the model without any regularization, and observe the accuracy on the train/test sets.
 
-# In[31]:
+# In[5]:
 
 parameters = model(train_X, train_Y)
 print ("On the training set:")
@@ -159,7 +159,7 @@ predictions_test = predict(test_X, test_Y, parameters)
 
 # The train accuracy is 94.8% while the test accuracy is 91.5%. This is the **baseline model** (you will observe the impact of regularization on this model). Run the following code to plot the decision boundary of your model.
 
-# In[32]:
+# In[6]:
 
 plt.title("Model without regularization")
 axes = plt.gca()
@@ -185,7 +185,7 @@ plot_decision_boundary(lambda x: predict_dec(parameters, x.T), train_X, train_Y)
 # ```
 # Note that you have to do this for $W^{[1]}$, $W^{[2]}$ and $W^{[3]}$, then sum the three terms and multiply by $ \frac{1}{m} \frac{\lambda}{2} $.
 
-# In[33]:
+# In[11]:
 
 # GRADED FUNCTION: compute_cost_with_regularization
 
@@ -209,7 +209,7 @@ def compute_cost_with_regularization(A3, Y, parameters, lambd):
     cross_entropy_cost = compute_cost(A3, Y) # This gives you the cross-entropy part of the cost
     
     ### START CODE HERE ### (approx. 1 line)
-    L2_regularization_cost = (lambd/(2*m))*(np.sum(np.square(W1)) + np.sum(np.square(W2)) + np.sum(np.square(W3)))
+    L2_regularization_cost = (lambd/(2*m))*(np.sum(np.square(W1)) + np.sum(np.square(W2)) +np.sum(np.square(W3)))
     ### END CODER HERE ###
     
     cost = cross_entropy_cost + L2_regularization_cost
@@ -217,7 +217,7 @@ def compute_cost_with_regularization(A3, Y, parameters, lambd):
     return cost
 
 
-# In[34]:
+# In[12]:
 
 A3, Y_assess, parameters = compute_cost_with_regularization_test_case()
 
@@ -243,7 +243,7 @@ print("cost = " + str(compute_cost_with_regularization(A3, Y_assess, parameters,
 # 
 # **Exercise**: Implement the changes needed in backward propagation to take into account regularization. The changes only concern dW1, dW2 and dW3. For each, you have to add the regularization term's gradient ($\frac{d}{dW} ( \frac{1}{2}\frac{\lambda}{m}  W^2) = \frac{\lambda}{m} W$).
 
-# In[36]:
+# In[13]:
 
 # GRADED FUNCTION: backward_propagation_with_regularization
 
@@ -267,21 +267,21 @@ def backward_propagation_with_regularization(X, Y, cache, lambd):
     dZ3 = A3 - Y
     
     ### START CODE HERE ### (approx. 1 line)
-    dW3 = 1./m * np.dot(dZ3, A2.T) + (lambd*W3)/m
+    dW3 = 1./m * np.dot(dZ3, A2.T) + (lambd*W3/m)
     ### END CODE HERE ###
     db3 = 1./m * np.sum(dZ3, axis=1, keepdims = True)
     
     dA2 = np.dot(W3.T, dZ3)
     dZ2 = np.multiply(dA2, np.int64(A2 > 0))
     ### START CODE HERE ### (approx. 1 line)
-    dW2 = 1./m * np.dot(dZ2, A1.T) + (lambd*W2)/m
+    dW2 = 1./m * np.dot(dZ2, A1.T) + (lambd*W2/m)
     ### END CODE HERE ###
     db2 = 1./m * np.sum(dZ2, axis=1, keepdims = True)
     
     dA1 = np.dot(W2.T, dZ2)
     dZ1 = np.multiply(dA1, np.int64(A1 > 0))
     ### START CODE HERE ### (approx. 1 line)
-    dW1 = 1./m * np.dot(dZ1, X.T) + (lambd*W1)/m
+    dW1 = 1./m * np.dot(dZ1, X.T) + (lambd*W1/m)
     ### END CODE HERE ###
     db1 = 1./m * np.sum(dZ1, axis=1, keepdims = True)
     
@@ -292,7 +292,7 @@ def backward_propagation_with_regularization(X, Y, cache, lambd):
     return gradients
 
 
-# In[37]:
+# In[14]:
 
 X_assess, Y_assess, cache = backward_propagation_with_regularization_test_case()
 
@@ -320,7 +320,7 @@ print ("dW3 = \n"+ str(grads["dW3"]))
 # - `compute_cost_with_regularization` instead of `compute_cost`
 # - `backward_propagation_with_regularization` instead of `backward_propagation`
 
-# In[38]:
+# In[15]:
 
 parameters = model(train_X, train_Y, lambd = 0.7)
 print ("On the train set:")
@@ -333,7 +333,7 @@ predictions_test = predict(test_X, test_Y, parameters)
 # 
 # You are not overfitting the training data anymore. Let's plot the decision boundary.
 
-# In[39]:
+# In[16]:
 
 plt.title("Model with L2-regularization")
 axes = plt.gca()
@@ -419,7 +419,7 @@ plot_decision_boundary(lambda x: predict_dec(parameters, x.T), train_X, train_Y)
 # 3. Set $A^{[1]}$ to $A^{[1]} * D^{[1]}$. (You are shutting down some neurons). You can think of $D^{[1]}$ as a mask, so that when it is multiplied with another matrix, it shuts down some of the values.
 # 4. Divide $A^{[1]}$ by `keep_prob`. By doing this you are assuring that the result of the cost will still have the same expected value as without drop-out. (This technique is also called inverted dropout.)
 
-# In[42]:
+# In[18]:
 
 # GRADED FUNCTION: forward_propagation_with_dropout
 
@@ -459,16 +459,16 @@ def forward_propagation_with_dropout(X, parameters, keep_prob = 0.5):
     ### START CODE HERE ### (approx. 4 lines)         # Steps 1-4 below correspond to the Steps 1-4 described above. 
     D1 = np.random.rand(A1.shape[0], A1.shape[1])                                         # Step 1: initialize matrix D1 = np.random.rand(..., ...)
     D1 = D1<keep_prob                                         # Step 2: convert entries of D1 to 0 or 1 (using keep_prob as the threshold)
-    A1 = A1* D1                                 # Step 3: shut down some neurons of A1
-    A1 = A1/keep_prob                                       # Step 4: scale the value of neurons that haven't been shut down
+    A1 = np.multiply(A1, D1)                                          # Step 3: shut down some neurons of A1
+    A1 = A1/keep_prob                                        # Step 4: scale the value of neurons that haven't been shut down
     ### END CODE HERE ###
     Z2 = np.dot(W2, A1) + b2
     A2 = relu(Z2)
     ### START CODE HERE ### (approx. 4 lines)
-    D2 = np.random.rand(A2.shape[0], A2.shape[1])                                        # Step 1: initialize matrix D2 = np.random.rand(..., ...)
-    D2 = D2<keep_prob     # Step 2: convert entries of D2 to 0 or 1 (using keep_prob as the threshold)
-    A2 = A2*D2                                 # Step 3: shut down some neurons of A2
-    A2 = A2/keep_prob                                        # Step 4: scale the value of neurons that haven't been shut down
+    D2 = np.random.rand(A2.shape[0], A2.shape[1])                                          # Step 1: initialize matrix D2 = np.random.rand(..., ...)
+    D2 = D2<keep_prob                                          # Step 2: convert entries of D2 to 0 or 1 (using keep_prob as the threshold)
+    A2 = np.multiply(A2, D2)                                         # Step 3: shut down some neurons of A2
+    A2 = A2/keep_prob                                         # Step 4: scale the value of neurons that haven't been shut down
     ### END CODE HERE ###
     Z3 = np.dot(W3, A2) + b3
     A3 = sigmoid(Z3)
@@ -478,7 +478,7 @@ def forward_propagation_with_dropout(X, parameters, keep_prob = 0.5):
     return A3, cache
 
 
-# In[43]:
+# In[19]:
 
 X_assess, parameters = forward_propagation_with_dropout_test_case()
 
@@ -511,7 +511,7 @@ print ("A3 = " + str(A3))
 # 2. During forward propagation, you had divided `A1` by `keep_prob`. In backpropagation, you'll therefore have to divide `dA1` by `keep_prob` again (the calculus interpretation is that if $A^{[1]}$ is scaled by `keep_prob`, then its derivative $dA^{[1]}$ is also scaled by the same `keep_prob`).
 # 
 
-# In[44]:
+# In[20]:
 
 # GRADED FUNCTION: backward_propagation_with_dropout
 
@@ -537,8 +537,8 @@ def backward_propagation_with_dropout(X, Y, cache, keep_prob):
     db3 = 1./m * np.sum(dZ3, axis=1, keepdims = True)
     dA2 = np.dot(W3.T, dZ3)
     ### START CODE HERE ### (≈ 2 lines of code)
-    dA2 = dA2* D2              # Step 1: Apply mask D2 to shut down the same neurons as during the forward propagation
-    dA2 = dA2/keep_prob           # Step 2: Scale the value of neurons that haven't been shut down
+    dA2 = np.multiply(dA2, D2)              # Step 1: Apply mask D2 to shut down the same neurons as during the forward propagation
+    dA2 = dA2/keep_prob              # Step 2: Scale the value of neurons that haven't been shut down
     ### END CODE HERE ###
     dZ2 = np.multiply(dA2, np.int64(A2 > 0))
     dW2 = 1./m * np.dot(dZ2, A1.T)
@@ -546,8 +546,8 @@ def backward_propagation_with_dropout(X, Y, cache, keep_prob):
     
     dA1 = np.dot(W2.T, dZ2)
     ### START CODE HERE ### (≈ 2 lines of code)
-    dA1 = dA1*D1   # Step 1: Apply mask D1 to shut down the same neurons as during the forward propagation
-    dA1 = dA1/keep_prob            # Step 2: Scale the value of neurons that haven't been shut down
+    dA1 = np.multiply(dA1, D1)              # Step 1: Apply mask D1 to shut down the same neurons as during the forward propagation
+    dA1 = dA1/keep_prob              # Step 2: Scale the value of neurons that haven't been shut down
     ### END CODE HERE ###
     dZ1 = np.multiply(dA1, np.int64(A1 > 0))
     dW1 = 1./m * np.dot(dZ1, X.T)
@@ -560,7 +560,7 @@ def backward_propagation_with_dropout(X, Y, cache, keep_prob):
     return gradients
 
 
-# In[45]:
+# In[21]:
 
 X_assess, Y_assess, cache = backward_propagation_with_dropout_test_case()
 
@@ -586,7 +586,7 @@ print ("dA2 = \n" + str(gradients["dA2"]))
 # - `forward_propagation_with_dropout` instead of `forward_propagation`.
 # - `backward_propagation_with_dropout` instead of `backward_propagation`.
 
-# In[46]:
+# In[22]:
 
 parameters = model(train_X, train_Y, keep_prob = 0.86, learning_rate = 0.3)
 
@@ -600,7 +600,7 @@ predictions_test = predict(test_X, test_Y, parameters)
 # 
 # Run the code below to plot the decision boundary.
 
-# In[47]:
+# In[23]:
 
 plt.title("Model with dropout")
 axes = plt.gca()
@@ -679,6 +679,11 @@ plot_decision_boundary(lambda x: predict_dec(parameters, x.T), train_X, train_Y)
 # - Regularization will help you reduce overfitting.
 # - Regularization will drive your weights to lower values.
 # - L2 regularization and Dropout are two very effective regularization techniques.
+
+# In[ ]:
+
+
+
 
 # In[ ]:
 

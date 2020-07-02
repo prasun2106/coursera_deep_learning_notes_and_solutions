@@ -15,7 +15,7 @@
 # 
 # To get started, run the following cell to load the packages and the planar dataset you will try to classify.
 
-# In[18]:
+# In[2]:
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -44,7 +44,7 @@ train_X, train_Y, test_X, test_Y = load_dataset()
 # 
 # **Instructions**: Please quickly read over the code below, and run it. In the next part you will implement the three initialization methods that this `model()` calls.
 
-# In[19]:
+# In[3]:
 
 def model(X, Y, learning_rate = 0.01, num_iterations = 15000, print_cost = True, initialization = "he"):
     """
@@ -114,7 +114,7 @@ def model(X, Y, learning_rate = 0.01, num_iterations = 15000, print_cost = True,
 # 
 # **Exercise**: Implement the following function to initialize all parameters to zeros. You'll see later that this does not work well since it fails to "break symmetry", but lets try it anyway and see what happens. Use np.zeros((..,..)) with the correct shapes.
 
-# In[20]:
+# In[7]:
 
 # GRADED FUNCTION: initialize_parameters_zeros 
 
@@ -137,13 +137,13 @@ def initialize_parameters_zeros(layers_dims):
     
     for l in range(1, L):
         ### START CODE HERE ### (≈ 2 lines of code)
-        parameters['W' + str(l)] = np.zeros((layers_dims[l], layers_dims[l-1]))
+        parameters['W' + str(l)] = np.zeros((layers_dims[l],layers_dims[l-1]))
         parameters['b' + str(l)] = np.zeros((layers_dims[l],1))
         ### END CODE HERE ###
     return parameters
 
 
-# In[21]:
+# In[8]:
 
 parameters = initialize_parameters_zeros([3,2,1])
 print("W1 = " + str(parameters["W1"]))
@@ -194,7 +194,7 @@ print("b2 = " + str(parameters["b2"]))
 
 # Run the following code to train your model on 15,000 iterations using zeros initialization.
 
-# In[22]:
+# In[9]:
 
 parameters = model(train_X, train_Y, initialization = "zeros")
 print ("On the train set:")
@@ -205,13 +205,13 @@ predictions_test = predict(test_X, test_Y, parameters)
 
 # The performance is really bad, and the cost does not really decrease, and the algorithm performs no better than random guessing. Why? Lets look at the details of the predictions and the decision boundary:
 
-# In[23]:
+# In[10]:
 
 print ("predictions_train = " + str(predictions_train))
 print ("predictions_test = " + str(predictions_test))
 
 
-# In[24]:
+# In[11]:
 
 plt.title("Model with Zeros initialization")
 axes = plt.gca()
@@ -236,7 +236,7 @@ plot_decision_boundary(lambda x: predict_dec(parameters, x.T), train_X, train_Y)
 # 
 # **Exercise**: Implement the following function to initialize your weights to large random values (scaled by \*10) and your biases to zeros. Use `np.random.randn(..,..) * 10` for weights and `np.zeros((.., ..))` for biases. We are using a fixed `np.random.seed(..)` to make sure your "random" weights  match ours, so don't worry if running several times your code gives you always the same initial values for the parameters. 
 
-# In[25]:
+# In[12]:
 
 # GRADED FUNCTION: initialize_parameters_random
 
@@ -260,14 +260,14 @@ def initialize_parameters_random(layers_dims):
     
     for l in range(1, L):
         ### START CODE HERE ### (≈ 2 lines of code)
-        parameters['W' + str(l)] = np.random.randn(layers_dims[l],layers_dims[l-1])*10
+        parameters['W' + str(l)] = np.random.randn(layers_dims[l], layers_dims[l-1])*10
         parameters['b' + str(l)] = np.zeros((layers_dims[l],1))
         ### END CODE HERE ###
 
     return parameters
 
 
-# In[26]:
+# In[13]:
 
 parameters = initialize_parameters_random([3, 2, 1])
 print("W1 = " + str(parameters["W1"]))
@@ -318,7 +318,7 @@ print("b2 = " + str(parameters["b2"]))
 
 # Run the following code to train your model on 15,000 iterations using random initialization.
 
-# In[27]:
+# In[14]:
 
 parameters = model(train_X, train_Y, initialization = "random")
 print ("On the train set:")
@@ -331,13 +331,13 @@ predictions_test = predict(test_X, test_Y, parameters)
 # 
 # Anyway, it looks like you have broken symmetry, and this gives better results. than before. The model is no longer outputting all 0s. 
 
-# In[28]:
+# In[15]:
 
 print (predictions_train)
 print (predictions_test)
 
 
-# In[29]:
+# In[16]:
 
 plt.title("Model with large random initialization")
 axes = plt.gca()
@@ -364,7 +364,7 @@ plot_decision_boundary(lambda x: predict_dec(parameters, x.T), train_X, train_Y)
 # 
 # **Hint**: This function is similar to the previous `initialize_parameters_random(...)`. The only difference is that instead of multiplying `np.random.randn(..,..)` by 10, you will multiply it by $\sqrt{\frac{2}{\text{dimension of the previous layer}}}$, which is what He initialization recommends for layers with a ReLU activation. 
 
-# In[30]:
+# In[17]:
 
 # GRADED FUNCTION: initialize_parameters_he
 
@@ -388,14 +388,14 @@ def initialize_parameters_he(layers_dims):
      
     for l in range(1, L + 1):
         ### START CODE HERE ### (≈ 2 lines of code)
-        parameters['W' + str(l)] = np.random.randn(layers_dims[l], layers_dims[l-1])*np.sqrt(2/layers_dims[l-1])
+        parameters['W' + str(l)] = np.random.randn(layers_dims[l], layers_dims[l-1])*np.sqrt(2/(layers_dims[l-1]))
         parameters['b' + str(l)] = np.zeros((layers_dims[l],1))
         ### END CODE HERE ###
         
     return parameters
 
 
-# In[31]:
+# In[18]:
 
 parameters = initialize_parameters_he([2, 4, 1])
 print("W1 = " + str(parameters["W1"]))
@@ -450,7 +450,7 @@ print("b2 = " + str(parameters["b2"]))
 
 # Run the following code to train your model on 15,000 iterations using He initialization.
 
-# In[32]:
+# In[19]:
 
 parameters = model(train_X, train_Y, initialization = "he")
 print ("On the train set:")
@@ -459,7 +459,7 @@ print ("On the test set:")
 predictions_test = predict(test_X, test_Y, parameters)
 
 
-# In[33]:
+# In[20]:
 
 plt.title("Model with He initialization")
 axes = plt.gca()
@@ -528,8 +528,3 @@ plot_decision_boundary(lambda x: predict_dec(parameters, x.T), train_X, train_Y)
 # - Random initialization is used to break symmetry and make sure different hidden units can learn different things
 # - Don't intialize to values that are too large
 # - He initialization works well for networks with ReLU activations. 
-
-# In[ ]:
-
-
-
